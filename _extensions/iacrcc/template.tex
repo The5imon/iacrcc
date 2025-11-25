@@ -1,0 +1,131 @@
+% Options for packages loaded elsewhere
+$passoptions.latex()$
+%
+$doc-class.tex()$
+
+$if(beamerarticle)$
+\usepackage{beamerarticle} % needs to be loaded first
+$endif$
+\usepackage{xcolor}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$endif$
+\usepackage{amsmath,amssymb}
+$--
+$-- section numbering
+$--
+$if(numbersections)$
+\setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
+$else$
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+$endif$
+$fonts.latex()$
+$font-settings.latex()$
+
+$--
+$-- Common latex replacement start
+$-- $common.latex()$
+
+$if(listings)$
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstset{
+  basicstyle=\ttfamily,
+  breaklines=true,
+  frame=single,
+  framesep=6pt,
+  rulecolor=\color{gray},
+  language=, % Important: clear default language
+  showstringspaces=false % A common preference for clean display
+}
+$endif$
+
+$tables.tex()$
+$graphics.tex()$
+$if(svg)$
+\usepackage{svg}
+$endif$
+
+$citations.tex()$
+
+$babel-lang.tex()$
+
+$--
+$-- pagestyle
+$--
+$if(pagestyle)$
+\pagestyle{$pagestyle$}
+$endif$
+
+$--
+$-- prevent overfull lines
+$--
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+$tightlist.tex()$
+
+$--
+$-- subfigure support
+$--
+$if(subfigure)$
+\usepackage{subcaption}
+$endif$
+
+$biblio-config.tex()$
+
+$--
+$-- csquotes
+$--
+$if(csquotes)$
+\usepackage[$for(csquotesoptions)$$csquotesoptions$$sep$,$endfor$]{csquotes}
+$endif$
+
+$for(iacrcc-header-includes)$
+$iacrcc-header-includes$
+$endfor$
+
+$-- no header-includes
+$-- Common latex replacement end
+$--
+
+$after-header-includes.latex()$
+$hypersetup.latex()$
+
+$before-title.tex()$
+
+$title.tex()$
+
+\begin{document}
+$before-body.tex()$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$toc.tex()$
+
+$if(linestretch)$
+\setstretch{$linestretch$}
+$endif$
+$if(has-frontmatter)$
+\mainmatter
+$endif$
+$body$
+
+$before-bib.tex()$
+
+$if(has-frontmatter)$
+\backmatter
+$endif$
+$if(nocite-ids)$
+\nocite{$for(nocite-ids)$$it$$sep$, $endfor$}
+$endif$
+$biblio.tex()$
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+$after-body.tex()$
+
+\end{document}

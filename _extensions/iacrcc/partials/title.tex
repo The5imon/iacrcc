@@ -1,0 +1,15 @@
+\title[running=$running$,subtitle=$subtitle$]{$title$}
+\date{$date$}
+
+$for(authors)$
+\addauthor[orcid    = {$authors.orcid$},
+           inst     = {$authors.metadata.inst$},
+           onclick  = {$authors.metadata.onclick$},
+           footnote = {$authors.metadata.footnote$},
+           email    = {$authors.email$},
+           surname  = {$authors.name.last$}
+          ]{$authors.name.literal$}
+          
+$endfor$
+
+\keywords[$for(keywords)$$keywords$$sep$,$endfor$]{$for(keywords)$$keywords$$sep$,$endfor$}

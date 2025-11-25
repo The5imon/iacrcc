@@ -1,0 +1,173 @@
+---
+title: On Authoring a IACR Communication in Cryptology Quarto Template
+subtitle: Demo Paper
+running: IACRCC Quarto Template
+format:
+  iacrcc-pdf:
+    keep-tex: false
+authors:
+  - name: First Author
+    footnote: "Footnote for First Author"
+    surname: "Author"
+    email: "first.author@template.local"
+abstract: |
+  This document is a template demonstrating the IACR Communication in Cryptology Quarto template and some nifty Quarto markup language features.
+keywords: [Template, Demo]
+bibliography: bibliography.bib
+---
+
+\newpage
+
+# Introduction {#sec-intro}
+
+[Quarto](https://quarto.org/) is an open-source scientific and technical publishing system. It can create a plethora of different publications from Articles over Websites to E-Books making use of far-reaching capabilities of the [Pandoc](https://pandoc.org/) markup toolbox. It is neatly positioned to produce journal articles and papers in a streamlined way, going from Markdown files to beautiful finished documents seamlessly without dealing with much \LaTeX typesetting.
+
+# The IACR Communication in Cryptology Template {#sec-iacrcc-template}
+
+This Quarto journal template is based on the [IACR Communication in Cryptology document class](https://publish.iacr.org/iacrcc) from the official publishing portal. This Quarto template does not translate all features from the document class. The following are currently not supported:
+
+- Affiliations
+- Funding Information
+
+## Authors
+
+A list of authors can be set in the YAML header of the main document:
+
+```yaml
+authors:
+  - name: First Author
+    footnote: "Footnote for First Author"
+    surname: "Author"
+    email: "first.author@template.local"
+```
+
+\noindent This structure follows the standardized [author normalization](https://quarto.org/docs/journals/authors.html) used by Quarto.
+
+## Bibliography
+
+The bibliography typesetting of the `iacrcc` document class is inherited but by default the **Biblatex** bibliography is used and created at the end of the document. These behaviors can be changed using the Quarto configurations. It is recommended to use [DBLP](http://www.dblp.org/) or [Cryptobib](https://cryptobib.di.ens.fr/) for bibliographic data.
+
+## Document Customization
+
+Quarto allows for much flexibility and customization when authoring a document. To include additional \LaTeX packages inside this document append them in the YAML header:
+
+```yaml
+iacrcc-header-includes:
+  - text: |
+      \usepackage{eplain}
+      \usepackage{easy-todo}
+  - file: packages.tex
+  - macros.tex 
+```
+
+This is a special definition of the header because the default `header-includes` and `include-in-header` directives are not compatible with the `iacrcc` document class, due to issues with the AMS theorem environment creation and settings ^[<https://github.com/orgs/quarto-dev/discussions/13345>]. More in depth documentation on authoring PDF documents can be found in the [Quarto documentation](https://quarto.org/docs/output-formats/pdf-basics.html).
+
+# Writing Syntax {#sec-writing-syntax}
+
+Standard [Markdown syntax](https://www.markdownguide.org/basic-syntax/) is of course supported. We mention particular interesting Quarto features for academic writing.
+
+## AMS Environments
+
+Using the AMS package that is included by default in the `iacrcc` document class we can add definitions using `{#def-*}` and theorems using `{#thm-*}` environments. And there are more AMS environments defined for which we refer to the documentation for Quarto [theorems and proofs](https://quarto.org/docs/authoring/cross-references.html#theorems-and-proofs).
+
+:::{#def-one}
+for defining things
+:::
+
+:::{#thm-one}
+for theorizing about things
+:::
+
+## Figures
+
+We can also easily create inline figures using the \LaTeX figure environment.
+
+::: {#fig-tikz fig-env="figure*"}
+
+```{=latex}
+\begin{tikzpicture}
+
+\begin{scope}[scale=.55,local bounding box=scope1]
+      \coordinate (Origin)   at (0,0);
+      \coordinate (XAxisMin) at (-5,0);
+      \coordinate (XAxisMax) at (5,0);
+      \coordinate (YAxisMin) at (0,-5);
+      \coordinate (YAxisMax) at (0,5);
+      \draw [thin, black!40, <->] (XAxisMin) -- (XAxisMax);% Draw x axis
+      \draw [thin, black!40,<->] (YAxisMin) -- (YAxisMax);% Draw y axis
+      %\draw[style=help lines,dashed,black!20] (-5,-5) grid[step=1cm] (5,5);
+
+      \begin{scope}
+          \clip (-5,-5) rectangle (5,5); % Clips the picture...
+          \pgftransformcm{1}{0.6}{0.7}{1}{\pgfpoint{0cm}{0cm}}
+
+          % setup the nodes
+          \foreach \x in {-15,...,15}
+          \foreach \y in {-15,...,15}
+          {
+              \node[shape=circle,fill=black!45,scale=0.35] (\x-\y) at (2*\x,\y+3){};
+          }
+      \end{scope}
+
+      % our little node
+      \node[shape=circle,fill=purple,scale=0.4] at (2.5,3.4){};
+      \node[shape=circle,draw=purple,fill=none,scale=0.8] at (2.5,3.4){};
+
+
+  \end{scope}
+
+\begin{scope}[scale=.55,shift={(12,0)}]
+      \coordinate (Origin)   at (0,0);
+      \coordinate (XAxisMin) at (-5,0);
+      \coordinate (XAxisMax) at (5,0);
+      \coordinate (YAxisMin) at (0,-5);
+      \coordinate (YAxisMax) at (0,5);
+      \draw [thin, black!40, <->] (XAxisMin) -- (XAxisMax);% Draw x axis
+      \draw [thin, black!40,<->] (YAxisMin) -- (YAxisMax);% Draw y axis
+      %\draw[style=help lines,dashed,black!20] (-5,-5) grid[step=1cm] (5,5);
+
+
+      \begin{scope}
+          \clip (-5,-5) rectangle (5,5); % Clips the picture...
+          \pgftransformcm{1}{0.6}{0.7}{1}{\pgfpoint{0cm}{0cm}}
+
+          % setup the nodes
+          \foreach \x in {-15,...,15}
+          \foreach \y in {-15,...,15}
+          {
+              \node[shape=circle,fill=black!45,scale=0.35] (\x-\y) at (2*\x,\y+3){};
+          }
+      \end{scope}
+
+      % our little node
+      \node[shape=circle,fill=purple!60,scale=0.4] at (2.5,3.4){};
+      \node[shape=circle,fill=purple,scale=0.4] at (2.1,3){};
+      \node[shape=circle,fill=none,draw=purple,scale=0.8] at (2.1,3){};
+
+  \end{scope}
+
+\end{tikzpicture}
+```
+
+Shortest vector problem [@TikZ:for:Cryptographers]
+
+:::
+
+\noindent This is enabled by the `{#fig-tikz fig-env="figure*"}` div class. More can be found in the Quarto [authoring figures](https://quarto.org/docs/authoring/figures.html) documentation.
+
+## Cross-References
+
+Furthermore, we can easily reference different @fig-tikz or other objects like: @def-one. These entities need to have the right prefix in their anchor for them to correctly register and assign to the correct type:
+
+- `#sec-*`
+- `#fig-*`
+- `#lst-*`
+
+\noindent For a comprehensive list refer to the Quarto [cross reference](https://quarto.org/docs/authoring/cross-references.html) documentation.
+
+## Citations
+
+In this template the Biblatex framework of the `iacrcc` document class is reused, so bibliographic entries can be managed in standard `.bib` files see @fig-tikz. Quarto also provides a rich bibliography management framework implementing direct access to [Zotero](https://www.zotero.org/).
+
+
+\newpage

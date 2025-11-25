@@ -1,0 +1,27 @@
+title: IACRCC Format Template
+author: Simon Böhm
+version: 1.0.0
+quarto-required: ">=1.7.0"
+contributes:
+  formats:
+    common:
+      toc: false
+    pdf:
+      documentclass: iacrcc
+      classoption: biblatex
+      cite-method: biblatex
+      biblio-title: "References"
+      hyperrefoptions: unicode,bookmarksopen=true,bookmarksopenlevel=2
+      number-sections: true
+      template: template.tex
+      template-partials:
+        - partials/title.tex
+        - partials/biblio-config.tex
+      format-resources:
+        - iacrcc.cls
+      csl-refs: false
+      listings: true
+      
+      
+      
+
